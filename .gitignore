@@ -41,3 +41,10 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.o
+ATTiny1634Test/Debug/main.d
+*.elf
+ATTiny1634Test/Debug/ATTiny1634Test.hex
+ATTiny1634Test/Debug/ATTiny1634Test.map
+*.srec
+ATTiny1634Test/Debug/ATTiny1634Test.eep
