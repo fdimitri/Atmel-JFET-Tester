@@ -58,9 +58,9 @@ main.d
 C_DEPS_AS_ARGS +=  \
 main.d
 
-OUTPUT_FILE_PATH +=ATTiny1634Test.elf
+OUTPUT_FILE_PATH +=JFET\ 7.0\ Firmware.elf
 
-OUTPUT_FILE_PATH_AS_ARGS +=ATTiny1634Test.elf
+OUTPUT_FILE_PATH_AS_ARGS +="JFET 7.0 Firmware.elf"
 
 ADDITIONAL_DEPENDENCIES:=
 
@@ -72,13 +72,18 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
-
+./main.o: .././main.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 4.9.2
+	$(QUOTE)E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"E:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.0.68\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1634 -B "E:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.0.68\gcc\dev\attiny1634" -c -std=gnu99 -Wl,-u,vfprintf -lprintf_flt -lm -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
 
 
 ./%.o: .././%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 4.9.2
-	$(QUOTE)E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"E:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.0.68\include"  -Os -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g3 -Wall -mmcu=attiny1634 -B "E:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.0.68\gcc\dev\attiny1634" -c -std=gnu99 -v -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"E:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.0.68\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=attiny1634 -B "E:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.0.68\gcc\dev\attiny1634" -c -std=gnu99 -Wl,-u,vfprintf -lprintf_flt -lm -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
@@ -107,13 +112,13 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER_SCRIPT_DEP)
 	@echo Building target: $@
 	@echo Invoking: AVR/GNU Linker : 4.9.2
-	$(QUOTE)E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="ATTiny1634Test.map" -Wl,--start-group -Wl,-lm  -Wl,--end-group -Wl,--gc-sections -mmcu=attiny1634 -B "E:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.0.68\gcc\dev\attiny1634"  
+	$(QUOTE)E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="JFET 7.0 Firmware.map" -Wl,--start-group -Wl,-lm  -Wl,--end-group -Wl,--gc-sections -mmcu=attiny1634 -B "E:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATtiny_DFP\1.0.68\gcc\dev\attiny1634" -Wl,-u,vfprintf -lprintf_flt -lm  
 	@echo Finished building target: $@
-	"E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures  "ATTiny1634Test.elf" "ATTiny1634Test.hex"
-	"E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "ATTiny1634Test.elf" "ATTiny1634Test.eep" || exit 0
-	"E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objdump.exe" -h -S "ATTiny1634Test.elf" > "ATTiny1634Test.lss"
-	"E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures "ATTiny1634Test.elf" "ATTiny1634Test.srec"
-	"E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-size.exe" "ATTiny1634Test.elf"
+	"E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures  "JFET 7.0 Firmware.elf" "JFET 7.0 Firmware.hex"
+	"E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "JFET 7.0 Firmware.elf" "JFET 7.0 Firmware.eep" || exit 0
+	"E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objdump.exe" -h -S "JFET 7.0 Firmware.elf" > "JFET 7.0 Firmware.lss"
+	"E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures "JFET 7.0 Firmware.elf" "JFET 7.0 Firmware.srec"
+	"E:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-size.exe" "JFET 7.0 Firmware.elf"
 	
 	
 
@@ -125,5 +130,5 @@ $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER
 clean:
 	-$(RM) $(OBJS_AS_ARGS) $(EXECUTABLES)  
 	-$(RM) $(C_DEPS_AS_ARGS)   
-	rm -rf "ATTiny1634Test.elf" "ATTiny1634Test.a" "ATTiny1634Test.hex" "ATTiny1634Test.lss" "ATTiny1634Test.eep" "ATTiny1634Test.map" "ATTiny1634Test.srec" "ATTiny1634Test.usersignatures"
+	rm -rf "JFET 7.0 Firmware.elf" "JFET 7.0 Firmware.a" "JFET 7.0 Firmware.hex" "JFET 7.0 Firmware.lss" "JFET 7.0 Firmware.eep" "JFET 7.0 Firmware.map" "JFET 7.0 Firmware.srec" "JFET 7.0 Firmware.usersignatures"
 	
